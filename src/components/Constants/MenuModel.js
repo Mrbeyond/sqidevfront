@@ -1,7 +1,7 @@
 const Model =[
   {
     label:'Search',
-    icon:'pi pi-fw pi-users',
+    icon:'fas fa-headset',
   },
   {
     label:'Searcher',

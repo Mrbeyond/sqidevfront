@@ -1,15 +1,49 @@
 <template>
   <MenuBar style="color:white;" :model='model'>
     <template #start>
-      <img alt='logo' src="@/assets/App/sqi.png" height="40" />
+      <img alt='logo' src="@/assets/App/sqi.png" height="50" />
+    </template>
+    <template #end>
+    <button @click="searcher"> me</button>
+      <InputText type="search" placeholder="search" @keyup="searcher" />
     </template>
   </MenuBar>
 </template>
 
+<script>
+  import MenuBar from 'primevue/menubar'
+  import Model from './../../Constants/MenuModel'
+  import InputText from 'primevue/inputtext'
+export default {
+  // name: 'LastRowFixed',
+  name:'HomeNav',
+  data: () => ({
+    menuVisible: false,
+    model: Model,
+    holder: null,
+  }),
+
+  methods: {
+
+    /**This would be used for searching later */
+    searcher(){
+      if(this.holder){
+        clearTimeout(this.holder)       
+      }
+      this.holder = setTimeout((()=>{
+        console.log('here');
+      }),500);
+    },
+
+  },
+
+  components: {
+    MenuBar, InputText
+  }
+}
+</script>
+
 <style lang="scss" >
-
-
-
 
 
 .p-menubar {
@@ -20,13 +54,13 @@
   left: 0;
   border-radius: 0px;
   z-index: 20;
-  //color: white !important;
-  background: linear-gradient(90deg, rgba(9, 30, 143, 0.96) 29.2%, rgba(13, 32, 137, 0.96) 38.68%, rgba(2, 25, 142, 0.96) 47.93%, rgba(9, 30, 143, 0.96) 57.86%) !important;
+  //color: white !important;0930143 #EFA722 #082260-033496 #000442  #00A9CE-000169206 #1E264A #11152A-112146 #B28200  #030E26-031438
+  background: linear-gradient(90deg, rgba(254, 254, 254, 1) 29.2%, rgba(250, 250, 250, 0.98) 38.68%, rgba(248, 248, 248, 0.96) 47.93%250, 250, 250, 1) !important;
 
 }
 .p-menuitem-text{
   
-  color: white !important;
+  color: #000442 !important;
   //background: red !important;
 }
 
@@ -40,28 +74,13 @@
 }
 
 .p-menuitem-icon{
-  color: white !important;
+  color: red !important;
 }
  
 .p-menuitem{
   
- // color: white !important;
-  //background: red !important; 
+  color: red !important;
+  // background: red !important; 
 }
 </style>
 
-<script>
-  import MenuBar from 'primevue/menubar'
-  import Model from './../../Constants/MenuModel'
-export default {
-  // name: 'LastRowFixed',
-  name:'HomeNav',
-  data: () => ({
-    menuVisible: false,
-    model: Model,
-  }),
-  components: {
-    MenuBar
-  }
-}
-</script>
