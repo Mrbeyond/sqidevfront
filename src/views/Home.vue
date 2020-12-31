@@ -10,8 +10,8 @@
    {{  noser.a + noser.b }}
   </div>
   <input type="color">
+  
 </template>
-
 <script>
 import HomeNav from '@/components/Homies/HomeNavBar/HomeNav';
 // import mapGetters from 'vuex';
@@ -22,8 +22,12 @@ export default {
   components: {
     HomeNav,
   },
+  data: ()=>({
+  
+  }),
   computed: {
-    // ...mapGetters({
+
+        // ...mapGetters({
     //   noser:'noser'
     // })
     see(){
@@ -38,6 +42,9 @@ export default {
     noser(){
       return this.$store.getters.noser;
     }
+  },
+  methods:{
+    
   }
 }
 </script>

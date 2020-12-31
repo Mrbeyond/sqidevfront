@@ -18,7 +18,9 @@
     :modal="true"
     :dismissableMask="true"
   >
-  <!-- jhjhjhj -->
+    <div>
+      <google-login />
+    </div>
   <template #footer>
     <Button label="NO" @click="openAuthModal"></Button>
   </template>
@@ -32,70 +34,71 @@
   import Model from './../../../Constants/MenuModel';
   import InputText from 'primevue/inputtext';
   import {TEST, AUTHMODAL} from './../../../Constants/storeConst';
-export default {
-  // name: 'LastRowFixed',
-  name:'HomeNav',
-  data: () => ({
-    menuVisible: false,
-    model: Model,
-    holder: null,
-  }),
+  import GoogleLogin from '../Auth/GoogleLogin.vue';
+  export default {
+    // name: 'LastRowFixed',
+    name:'HomeNav',
+    data: () => ({
+      menuVisible: false,
+      model: Model,
+      holder: null,
+    }),
 
-  methods: {
-    
+    methods: {
+      
 
-    /**This would be used for searching later */
-    searcher(){
-      if(this.holder){
-        clearTimeout(this.holder)       
+      /**This would be used for searching later */
+      searcher(){
+        if(this.holder){
+          clearTimeout(this.holder)       
+        }
+        this.holder = setTimeout((()=>{
+          console.log('here');
+        }),500);
+      },
+
+      /** Used to test the commit of mutation and action dispatch*/
+      changer(){
+        this.$store.dispatch(TEST)
+      },
+
+      /** Auth modal opener */
+      openAuthModal(){
+        this.$store.commit(AUTHMODAL)
+      },
+
+    },
+
+    computed: {
+      
+      auth(){
+        //div.p-dialog-mask.p-component-overlay p-dialog-mask p-component-overlay
+        return this.$store.getters.auth;
       }
-      this.holder = setTimeout((()=>{
-        console.log('here');
-      }),500);
+
     },
 
-    /** Used to test the commit of mutation and action dispatch*/
-    changer(){
-      this.$store.dispatch(TEST)
-    },
-
-    /** Auth modal opener */
-    openAuthModal(){
-      this.$store.commit(AUTHMODAL)
-    },
-
-  },
-
-  computed: {
-    
-    auth(){
-      //div.p-dialog-mask.p-component-overlay p-dialog-mask p-component-overlay
-      return this.$store.getters.auth;
-    }
-
-  },
-
-  mounted(){
-    window.addEventListener('click', (event)=>{
-      console.log( getComputedStyle(event.target))
-      if(this.auth){
-        if(event.path  && event.path[0] === "div.p-dialog-mask.p-component-overlay"){
+    mounted(){
+      window.addEventListener('click', (event)=>{
+        // console.log( getComputedStyle(event.target))
+        if(this.auth){
+          if(event.path  && event.path[0] === "div.p-dialog-mask.p-component-overlay"){
+              this.openAuthModal();
+          }
+          else if(event.target && event.target.className === "p-dialog-mask p-component-overlay"){
             this.openAuthModal();
+          }
+        }else{
+          return
         }
-        else if(event.target && event.target.className === "p-dialog-mask p-component-overlay"){
-          this.openAuthModal();
-        }
-      }else{
-        return
-      }
-    })
-  
-  },
+      })
+    
+    },
 
-  components: {
-    MenuBar, InputText, Dialog, Button
+    components: {
+      MenuBar, InputText, Dialog, Button, GoogleLogin,
+    }
   }
-}
 </script>
 
 <style lang="scss" >
