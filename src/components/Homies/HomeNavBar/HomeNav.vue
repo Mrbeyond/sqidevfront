@@ -79,20 +79,13 @@
     },
 
     mounted(){
-      window.addEventListener('click', (event)=>{
-        // console.log( getComputedStyle(event.target))
-        if(this.auth){
-          if(event.path  && event.path[0] === "div.p-dialog-mask.p-component-overlay"){
-              this.openAuthModal();
-          }
-          else if(event.target && event.target.className === "p-dialog-mask p-component-overlay"){
-            this.openAuthModal();
-          }
-        }else{
-          return
-        }
-      })
+      console.log('here');
+      // window.addEventListener('click', this.closeModal);
     
+    },
+
+    beforeUnmount(){
+      // window.removeEventListener('click', this.closeModal)
     },
 
     components: {
@@ -104,33 +97,29 @@
 <style lang="scss" >
 
 
-.p-menubar {
-  width: 100%;
-  margin:0% !important;
-  position: fixed;
-  top:0;
-  left: 0;
-  border-radius: 0px;
-  z-index: 20;
-  //color: white !important;0930143 #EFA722 #082260-033496 #000442  #00A9CE-000169206 #1E264A #11152A-112146 #B28200  #030E26-031438
-  background: green;
-  // linear-gradient(90deg, rgba(254, 254, 254, 1) 29.2%, rgba(250, 250, 250, 0.98) 38.68%, rgba(248, 248, 248, 0.96) 47.93%250, 250, 250, 1) !important;*/
-
-  @media (min-width: 962px) {
+  .p-menubar {
     width: 100%;
-    margin:0% !important;
     position: fixed;
     top:0;
     left: 0;
     border-radius: 0px;
     z-index: 20;
     //color: white !important;0930143 #EFA722 #082260-033496 #000442  #00A9CE-000169206 #1E264A #11152A-112146 #B28200  #030E26-031438
-    background:green;
-    //linear-gradient(90deg, rgba(254, 254, 254, 1) 29.2%, rgba(250, 250, 250, 0.98) 38.68%, rgba(248, 248, 248, 0.96) 47.93%250, 250, 250, 1) !important;
-
+    background: linear-gradient(90deg, rgba(254, 254, 254, 1) 29.2%, rgba(250, 250, 250, 0.98) 38.68%, rgba(248, 248, 248, 0.96) 47.93%) !important;
+    
   }
 
-}
+  @media screen and (max-width: 960px) {
+    .p-menubar {
+      width: 100% !important;
+      position: fixed !important;
+      top:0 !important;
+      left: 0 !important;
+      border-radius: 0px !important;
+      z-index: 20 !important;
+      background: linear-gradient(90deg, rgba(254, 254, 254, 1) 29.2%, rgba(250, 250, 250, 0.98) 38.68%, rgba(248, 248, 248, 0.96) 47.93) !important;
+    }
+  }
 
 
 .p-menuitem-text{
@@ -158,5 +147,3 @@
   // background: red !important; 
 }
 </style>
-
-<!-- 892999547246-59gvrga70uchme09fvdmms097l0bhcc3.apps.googleusercontent.com -->
