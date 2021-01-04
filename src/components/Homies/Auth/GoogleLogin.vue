@@ -1,14 +1,29 @@
 <template>
-  <div class="g-signin2" data-onsuccess="onSignIn">Login</div>
-  <button id="gSignIn">login</button>
+  <div class="g-signin2" id="gSignIn"></div>
+  <div v-if="!isLoginButtonLoaded" class="p-d-flex p-jc-center p-m-6">
+    <ProgressSpinner 
+      style="width:50px;height:50px" 
+      strokeWidth="8" 
+      fill="#EEEEEE" 
+      animationDuration=".5s"
+    />
+  </div>
+  <div  v-if="wentWrong" class="p-d-flex p-jc-center p-mt-2" style="color:red"> 
+    Oops! Something went wrong. 
+  </div>
+
 </template>
 <script>
-import { AUTHMODAL } from '../../../Constants/storeConst';
-  import {PARAM} from './../../../Constants/GoogleAuth'
+  import { AUTHMODAL, CHANGE_LOGIN_STATUS, STUDENT } from '../../../Constants/storeConst';
+  import {PARAM} from './../../../Constants/GoogleAuth';
+  import ProgressSpinner from 'primevue/progressspinner';
+  import Axios from 'axios';
+  import {PROXY} from './../../../Constants/apiConst';
   export default {
     name: "Google",
     data: ()=>({
-      
+      isLoginButtonLoaded: false,
+      wentWrong: false,
 
     }),
 
@@ -30,6 +45,15 @@ import { AUTHMODAL } from '../../../Constants/storeConst';
       openAuthModal(){
         this.$store.commit(AUTHMODAL);
       },
+
+      /** Update the auth student in store */
+      updateStudent(data){
+        this.$store.commit(STUDENT, data);        
+      },
+
+      updateLoginStatus(){
+        this.$store.commit(CHANGE_LOGIN_STATUS, true);
+      }
     
     },
 
@@ -42,22 +66,53 @@ import { AUTHMODAL } from '../../../Constants/storeConst';
 
     mounted(){
       if(window.gapi){
-        window.gapi.load('auth2', function() {
+        window.gapi.load('auth2', ()=>{
           window.gapi.auth2.init(PARAM)
           .then(()=>{
-            const onSuccess=(googleUser)=>{
+            this.isLoginButtonLoaded = true;
+            // console.log(window.gapi.auth2.getAuthInstance().currentUser.get());
+            // console.log(window.gapi.auth2.getAuthInstance());
+            const onSuccess=(googleUser)=>{            
+              var profile = googleUser.getBasicProfile();
+
+              /** Auth payload to auth api */
+               const form ={
+                email: profile.getEmail(),
+                firstName: profile.getGivenName(),
+                lastName: profile.getFamilyName(),
+                password: profile.getId()
+              };
               
-            var profile = googleUser.getBasicProfile();
-            console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-            console.log('Name: ' + profile.getName());
-            console.log('Image URL: ' + profile.getImageUrl());
-            console.log('Email: ' + profile.getEmail());
+              Axios.post(`${PROXY}/auth`, form)
+              .then(res=>{
+                if(res.data.success){
+                  window.localStorage.token = res.data.data.token;
+                  const student = res.data.data.data;
+                  this.updateLoginStatus();
+                  this.updateStudent(student)
+
+                  if(student.phoneNum && student.gender && student.course){
+                    //go db
+                  }else{
+                    // goto updater
+                  }
+                }else{
+                  this.wentWrong = true;
+                }
+              })
+              .catch(err => {
+                if(err){
+                  this.wentWrong = true;
+                }
+              })
+
+              // console.log(profile, 'here');
             };
 
             const onFailure =(err)=>{
               console.log(err);
-            }
-            // window.gapi.auth2.getAuthInstance().then(data=>console.log(data,555))
+            };
+            
             window.gapi.signin2.render('gSignIn', {
               'scope': 'profile email',
               'width': 240,
@@ -86,6 +141,10 @@ import { AUTHMODAL } from '../../../Constants/storeConst';
        * Removed the modal monitor listener
       */
       window.removeEventListener('click', this.closeModal)
+    },
+
+    components: {
+      ProgressSpinner,
     },
 
     

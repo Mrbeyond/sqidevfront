@@ -1,15 +1,14 @@
 <template>
   <HomeNav />
-  <div style="margin-top: 70px">{{ see }}</div>
-  <div v-if="rayId">
-    <div v-for="(r, i) in rayId" :key="i">
-      {{ r }}
-    </div>
+  <div style="margin-top: 70px">
+    <router-view></router-view>
   </div>
-  <div>
-   {{  noser.a + noser.b }}
+  <div v-if="student">
+    {{ student.id }} {{ student.firstName }} {{ student.lastName }}{{ student.id }}
   </div>
   <input type="color">
+  <router-link to="/update-profile">update</router-link>
+  <router-link to="/about">about</router-link>
   
 </template>
 <script>
@@ -41,6 +40,10 @@ export default {
 
     noser(){
       return this.$store.getters.noser;
+    },
+
+    student(){
+      return this.$store.getters.student;
     }
   },
   methods:{

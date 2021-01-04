@@ -4,7 +4,7 @@
       <img alt='logo' src="@/assets/App/sqi.png" height="50" />
     </template>
     <template #end>
-      <Button label="Sign in" class="p-mr-2" @click="openAuthModal"></Button>
+      <Button v-if="isIn" label="Sign Out" class="p-mr-2" @click="logOut"></Button>
       <InputText type="search" placeholder="search" @keyup="searcher" />
     </template>
   </MenuBar>
@@ -18,11 +18,10 @@
     :dismissableMask="true"
   >
     <div class="p-m-6">
-      <google-login />
     </div>
-  <template #footer>
-    <Button label="Close" @click="openAuthModal"></Button>
-  </template>
+    <template #footer>
+      <Button label="Close" @click="openAuthModal"></Button>
+    </template>
   </Dialog>
 </template>
 
@@ -30,16 +29,15 @@
   import MenuBar from 'primevue/menubar';
   import Dialog from 'primevue/dialog';
   import Button from 'primevue/button';
-  import {HomeNavBarModel} from './../../../Constants/MenuModel';
+  import {NavBarModel} from './../../../Constants/MenuModel';
   import InputText from 'primevue/inputtext';
   import {TEST, AUTHMODAL} from './../../../Constants/storeConst';
-  import GoogleLogin from '../Auth/GoogleLogin.vue';
   export default {
     // name: 'LastRowFixed',
-    name:'HomeNav',
+    name:'NavBar',
     data: () => ({
       menuVisible: false,
-      model: HomeNavBarModel,
+      model: NavBarModel,
       holder: null,
     }),
 
@@ -66,6 +64,10 @@
         this.$store.commit(AUTHMODAL)
       },
 
+      logOut(){
+
+      }
+
     },
 
     computed: {
@@ -73,7 +75,12 @@
       auth(){
         //div.p-dialog-mask.p-component-overlay p-dialog-mask p-component-overlay
         return this.$store.getters.auth;
+      },
+
+      isIn(){
+        return this.$store.getters.isIn;
       }
+
 
     },
 
@@ -88,7 +95,7 @@
     },
 
     components: {
-      MenuBar, InputText, Dialog, Button, GoogleLogin,
+      MenuBar, InputText, Dialog, Button,
     }
   }
 </script>
