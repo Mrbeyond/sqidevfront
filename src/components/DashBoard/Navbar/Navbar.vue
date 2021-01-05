@@ -11,7 +11,7 @@
   <Dialog 
     id='modialog'
     header="Up" 
-    :closable="true"  
+    :closable="true"
     :visible="auth" 
     :maximizable="true" 
     :modal="true"
@@ -31,7 +31,10 @@
   import Button from 'primevue/button';
   import {NavBarModel} from './../../../Constants/MenuModel';
   import InputText from 'primevue/inputtext';
-  import {TEST, AUTHMODAL} from './../../../Constants/storeConst';
+  import {TEST, AUTHMODAL, STUDENT, CHANGE_LOGIN_STATUS} from './../../../Constants/storeConst';
+  import { PARAM } from '../../../Constants/GoogleAuth';
+// import Axios from 'axios';
+// import { PROXY } from '../../../Constants/apiConst';
   export default {
     // name: 'LastRowFixed',
     name:'NavBar',
@@ -64,16 +67,54 @@
         this.$store.commit(AUTHMODAL)
       },
 
+      /** Updates the current auth student in store */
+      updateStudent(data){
+        this.$store.commit(STUDENT, data);        
+      },
+
+      /** Updates the current student login status*/
+      updateLoginStatus(){
+        this.$store.commit(CHANGE_LOGIN_STATUS, false);
+      },
+
       logOut(){
-
+        if(window.gapi){
+          window.gapi.load('auth2', ()=>{
+            window.gapi.auth2.init(PARAM)
+            .then(()=>{
+              console.log(window.gapi.auth2.getAuthInstance().isSignedIn.get());
+              const auths = window.gapi.auth2.getAuthInstance();
+              if(auths.isSignedIn.get()){
+                auths.signOut().then(()=>{
+                  auths.disconnect();
+                })
+              }
+              
+              // Axios.get(`${PROXY}/logout`)
+              // .then(res=>{
+              //   if(res.data.success){
+              //     //
+              //   }
+              // })
+              // .catch(err => {
+              //   if(err){
+              //     this.wentWrong = true;
+              //   }
+              // });
+              
+              this.updateStudent(null);
+              this.updateLoginStatus();
+              window.localStorage.clear();
+              this.$router.push("/");
+              
+          });
+        });
+        }
       }
-
     },
-
     computed: {
       
       auth(){
-        //div.p-dialog-mask.p-component-overlay p-dialog-mask p-component-overlay
         return this.$store.getters.auth;
       },
 
@@ -85,7 +126,6 @@
     },
 
     mounted(){
-      console.log('here');
       // window.addEventListener('click', this.closeModal);
     
     },

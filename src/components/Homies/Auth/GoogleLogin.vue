@@ -46,11 +46,12 @@
         this.$store.commit(AUTHMODAL);
       },
 
-      /** Update the auth student in store */
+      /** Updates the current auth student in store */
       updateStudent(data){
         this.$store.commit(STUDENT, data);        
       },
 
+      /** Updates the current student login status*/
       updateLoginStatus(){
         this.$store.commit(CHANGE_LOGIN_STATUS, true);
       }
@@ -86,10 +87,18 @@
               Axios.post(`${PROXY}/auth`, form)
               .then(res=>{
                 if(res.data.success){
-                  window.localStorage.token = res.data.data.token;
-                  const student = res.data.data.data;
+                  let payload
+                  try {
+                    payload = JSON.parse(window.atob(window.atob(res.data.data)));             
+                  } catch (e) {
+                    return this.wentWrong = true;
+                  }
+
+                  window.localStorage.token = window.btoa(window.btoa(payload.token));
+                  const student = payload.data;
                   this.updateLoginStatus();
-                  this.updateStudent(student)
+                  this.updateStudent(student);
+                  this.openAuthModal();
 
                   if(student.phoneNum && student.gender && student.course){
                     //go db

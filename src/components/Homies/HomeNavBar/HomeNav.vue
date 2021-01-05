@@ -78,7 +78,6 @@
     },
 
     mounted(){
-      console.log('here');
       // window.addEventListener('click', this.closeModal);
     
     },

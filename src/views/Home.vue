@@ -9,6 +9,7 @@
   <input type="color">
   <router-link to="/update-profile">update</router-link>
   <router-link to="/about">about</router-link>
+  <router-link to="/beyond">student</router-link>
   
 </template>
 <script>

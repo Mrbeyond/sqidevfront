@@ -1,9 +1,10 @@
-import { createRouter, createWebHistory } from 'vue-router'
-import Home from './../views/Home.vue'
-import About from './../components/Homies/About/About.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import Home from './../views/Home.vue';
+import About from './../components/Homies/About/About.vue';
 import Landing from './../components/Homies/Landing/Landing.vue';
-import BasicUpdate from './../components/Homies/Auth/BasicUpdate.vue'
-import NotFound from './../components/Homies/NotFound/NotFound.vue'
+import BasicUpdate from './../components/Homies/Auth/BasicUpdate.vue';
+import NotFound from './../components/Homies/NotFound/NotFound.vue';
+import Dashboard from './../views/Dashboard.vue';
 const routes = [
   {
     path: '/',
@@ -11,17 +12,17 @@ const routes = [
     component: Home,
     children: [
       {
-        path: '/',
+        path: '',
         name: 'Landing',
         component: Landing,
       },
       {
-        path: '/about',
+        path: 'about',
         name: 'About',
         component: About,
       },
       {
-        path: '/update-profile',
+        path: 'update-profile',
         name: 'BasciUpdate',
         component: BasicUpdate,
       },
@@ -29,6 +30,29 @@ const routes = [
     ]
   },
 
+  {
+    path: '/:student',
+    name: 'Dashboard',
+    component: Dashboard,
+    children: [
+      {
+        path: '',
+        name: 'Landing',
+        component: Landing,
+      },
+      {
+        path: 'about',
+        name: 'About',
+        component: About,
+      },
+      {
+        path: 'update-profile',
+        name: 'BasciUpdate',
+        component: BasicUpdate,
+      },
+
+    ]
+  },
 
   {
     path: "/:pathMatch(.*)*",
