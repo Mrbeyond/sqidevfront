@@ -4,18 +4,18 @@ import Home from './../views/Home.vue';
 // import Landing from './../components/Homies/Landing/Landing.vue';
 // import BasicUpdate from './../components/Homies/Auth/BasicUpdate.vue';
 import NotFound from './../components/Homies/NotFound/NotFound.vue';
-
-// /**  */
-// import Dashboard from './../views/Dashboard.vue';
-// import Posts from './../components/DashBoard/Posts/Posts.vue'
-// import Projects from './../components/DashBoard/Projects/Projects.vue'
-// import Profile from './../components/DashBoard/Profile/Profile.vue'
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
-  },  
+    
+  },
+  // {
+  //   path: '',
+  //   name: 'Landing',
+  //   component: Landing,
+  // }, 
   // {
   //   path: 'about',
   //   name: 'About',
@@ -26,42 +26,14 @@ const routes = [
   //   name: 'BasciUpdate',
   //   component: BasicUpdate,
   // },
-
-
   // {
-  //   path: '/:student',
-  //   name: 'Dashboard',
-  //   component: Dashboard,
-  //   children: [
-  //     {
-  //       path: '',
-  //       name: 'Landing',
-  //       component: Landing,
-  //     },
-  //     {
-  //       path: 'posts',
-  //       name: 'Posts',
-  //       component: Posts,
-  //     },
-  //     {
-  //       path: 'profile',
-  //       name: 'PRofile',
-  //       component: Profile,
-  //     },
-  //     {
-  //       path: 'projects',
-  //       name: 'Projects',
-  //       component: Projects,
-  //     },
-  //     {
-  //       path: '',
-  //       name: 'Landing',
-  //       component: Landing,
-  //     },
-      
-
-  //   ]
+  //   path: '',
+  //   name: 'Landing',
+  //   component: Landing,
   // },
+   
+
+ 
 
   {
     path: "/:pathMatch(.*)*",

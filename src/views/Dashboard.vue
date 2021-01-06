@@ -1,32 +1,23 @@
-<template>
-  <div>This is Dashboard</div>
-  <input type="color">
-  <router-link to="/beyond">beyond</router-link>
-  <router-link to="/beyond/profile">Profile</router-link>
-  <router-link to="/beyond/projects">Project</router-link>
-  <router-link to="/beyond/posts">Posts</router-link>
-  
-</template>
+<template>   
+  <div> This is the dashBoard</div>
+</template>  
+
 <script>
+
   import { STUDENT } from '../Constants/storeConst';
 
-  export default {
+  export default { 
 
-    
-    
-    
-    
-    
-    
-    
     name: 'Dashboard',
-    components: {},
+    components: {
+    },
+
     data: ()=>({
     
     }),
+
     computed: {
-
-
+      
       isIn(){
         return this.$store.getters.isIn;
       },
