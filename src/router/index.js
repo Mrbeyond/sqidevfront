@@ -1,58 +1,39 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Home from './../views/Home.vue';
-import About from './../components/Homies/About/About.vue';
-import Landing from './../components/Homies/Landing/Landing.vue';
-import BasicUpdate from './../components/Homies/Auth/BasicUpdate.vue';
+// import About from './../components/Homies/About/About.vue';
+// import Landing from './../components/Homies/Landing/Landing.vue';
+// import BasicUpdate from './../components/Homies/Auth/BasicUpdate.vue';
 import NotFound from './../components/Homies/NotFound/NotFound.vue';
-import Dashboard from './../views/Dashboard.vue';
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home,
-    children: [
-      {
-        path: '',
-        name: 'Landing',
-        component: Landing,
-      },
-      {
-        path: 'about',
-        name: 'About',
-        component: About,
-      },
-      {
-        path: 'update-profile',
-        name: 'BasciUpdate',
-        component: BasicUpdate,
-      },
-
-    ]
+    
   },
+  // {
+  //   path: '',
+  //   name: 'Landing',
+  //   component: Landing,
+  // }, 
+  // {
+  //   path: 'about',
+  //   name: 'About',
+  //   component: About,
+  // },
+  // {
+  //   path: 'update-profile',
+  //   name: 'BasciUpdate',
+  //   component: BasicUpdate,
+  // },
+  // {
+  //   path: '',
+  //   name: 'Landing',
+  //   component: Landing,
+  // },
+   
 
-  {
-    path: '/:student',
-    name: 'Dashboard',
-    component: Dashboard,
-    children: [
-      {
-        path: '',
-        name: 'Landing',
-        component: Landing,
-      },
-      {
-        path: 'about',
-        name: 'About',
-        component: About,
-      },
-      {
-        path: 'update-profile',
-        name: 'BasciUpdate',
-        component: BasicUpdate,
-      },
-
-    ]
-  },
+ 
 
   {
     path: "/:pathMatch(.*)*",
@@ -62,7 +43,7 @@ const routes = [
 
   {
     path: '/:pathMatch(.*)', 
-    name: 'bad-not-found', 
+    name: 'NotFound', 
     component: NotFound 
   },
   
