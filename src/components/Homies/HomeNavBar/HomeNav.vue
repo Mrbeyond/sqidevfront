@@ -1,7 +1,10 @@
 <template>
   <MenuBar :model='model'>
     <template #start>
-      <img alt='logo' src="@/assets/App/sqi.png" height="50" />
+      <router-link to="/">
+        <img alt='logo' src="@/assets/App/sqi.png" height="50" />
+      </router-link>
+      
     </template>
     <template #end>
       <Button label="Sign in" class="p-mr-2" @click="openAuthModal"></Button>
